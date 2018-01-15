@@ -1,6 +1,6 @@
-package kg.almetico.converter.docx2csv;
+package kg.almetico.converter.docx2moodle;
 
-import kg.almetico.converter.docx2csv.model.moodle.Question;
+import kg.almetico.converter.docx2moodle.model.moodle.Question;
 
 public class Validator {
 

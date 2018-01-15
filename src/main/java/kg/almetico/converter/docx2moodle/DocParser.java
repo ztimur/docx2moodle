@@ -1,6 +1,6 @@
-package kg.almetico.converter.docx2csv;
+package kg.almetico.converter.docx2moodle;
 
-import kg.almetico.converter.docx2csv.model.moodle.*;
+import kg.almetico.converter.docx2moodle.model.moodle.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;

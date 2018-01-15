@@ -1,4 +1,4 @@
-package kg.almetico.converter.docx2csv.model.moodle;
+package kg.almetico.converter.docx2moodle.model.moodle;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;

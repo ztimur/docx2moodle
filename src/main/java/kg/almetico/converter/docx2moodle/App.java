@@ -1,6 +1,6 @@
-package kg.almetico.converter.docx2csv;
+package kg.almetico.converter.docx2moodle;
 
-import kg.almetico.converter.docx2csv.model.moodle.Quiz;
+import kg.almetico.converter.docx2moodle.model.moodle.Quiz;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
@@ -12,7 +12,7 @@ public class App {
         DocParser docParser = new DocParser();
 
         try {
-            docParser.parse("assets/assessment.docx");
+            docParser.parse("assets/example-questions.docx");
             Quiz quiz = docParser.getQuiz();
             Utils.marshallQuiz(quiz, System.out);
         } catch (QuestionValidationException e) {

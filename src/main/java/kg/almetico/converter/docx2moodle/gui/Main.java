@@ -1,4 +1,4 @@
-package kg.almetico.converter.docx2csv.gui;
+package kg.almetico.converter.docx2moodle.gui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -12,9 +12,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import kg.almetico.converter.docx2csv.DocParser;
-import kg.almetico.converter.docx2csv.Utils;
-import kg.almetico.converter.docx2csv.model.moodle.Quiz;
+import kg.almetico.converter.docx2moodle.DocParser;
+import kg.almetico.converter.docx2moodle.Utils;
+import kg.almetico.converter.docx2moodle.model.moodle.Quiz;
 
 import java.io.File;
 import java.io.FileOutputStream;

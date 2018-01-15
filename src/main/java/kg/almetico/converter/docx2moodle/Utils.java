@@ -1,7 +1,7 @@
-package kg.almetico.converter.docx2csv;
+package kg.almetico.converter.docx2moodle;
 
-import kg.almetico.converter.docx2csv.model.moodle.Question;
-import kg.almetico.converter.docx2csv.model.moodle.Quiz;
+import kg.almetico.converter.docx2moodle.model.moodle.Question;
+import kg.almetico.converter.docx2moodle.model.moodle.Quiz;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

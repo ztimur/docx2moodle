@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<quiz>
+    <question type="multichoice">
+        <name>
+            <text>Как сформулирован основной вопрос философии?</text>
+        </name>
+        <questiontext format="html">
+            <text>Как сформулирован основной вопрос философии?</text>
+        </questiontext>
+        <generalfeedback format="html">
+            <text></text>
+        </generalfeedback>
+        <defaultgrade>1.0</defaultgrade>
+        <penalty>0.3333333</penalty>
+        <hidden>0</hidden>
+        <single>true</single>
+        <shuffleanswers>true</shuffleanswers>
+        <answernumbering>123</answernumbering>
+        <correctfeedback format="html">
+            <text>Ваш ответ верный.</text>
+        </correctfeedback>
+        <partiallycorrectfeedback format="html">
+            <text>Ваш ответ частично правильный.</text>
+        </partiallycorrectfeedback>
+        <incorrectfeedback format="html">
+            <text>Ваш ответ неправильный.</text>
+        </incorrectfeedback>
+        <shownumcorrect></shownumcorrect>
+        <answer fraction="0.0" format="html">
+            <text>Отношение бытия к мышлению</text>
+            <feedback format="html">
+                <text></text>
+            </feedback>
+        </answer>
+        <answer fraction="100.0" format="html">
+            <text>Отношение мышления к бытию</text>
+            <feedback format="html">
+                <text></text>
+            </feedback>
+        </answer>
+        <answer fraction="0.0" format="html">
+            <text>Отношение человека и мышления к бытию</text>
+            <feedback format="html">
+                <text></text>
+            </feedback>
+        </answer>
+        <answer fraction="0.0" format="html">
+            <text>Связь бытия и мышления с отношением</text>
+            <feedback format="html">
+                <text></text>
+            </feedback>
+        </answer>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>Что изучает философия?</text>
+        </name>
+        <questiontext format="html">
+            <text>Что изучает философия?</text>
+        </questiontext>
+        <generalfeedback format="html">
+            <text></text>
+        </generalfeedback>
+        <defaultgrade>1.0</defaultgrade>
+        <penalty>0.3333333</penalty>
+        <hidden>0</hidden>
+        <single>true</single>
+        <shuffleanswers>true</shuffleanswers>
+        <answernumbering>123</answernumbering>
+        <correctfeedback format="html">
+            <text>Ваш ответ верный.</text>
+        </correctfeedback>
+        <partiallycorrectfeedback format="html">
+            <text>Ваш ответ частично правильный.</text>
+        </partiallycorrectfeedback>
+        <incorrectfeedback format="html">
+            <text>Ваш ответ неправильный.</text>
+        </incorrectfeedback>
+        <shownumcorrect></shownumcorrect>
+        <answer fraction="0.0" format="html">
+            <text>Наиболее общие закономерности развития природы и общества</text>
+            <feedback format="html">
+                <text></text>
+            </feedback>
+        </answer>
+        <answer fraction="0.0" format="html">
+            <text>Наиболее общие закономерности развития мышления и природы</text>
+            <feedback format="html">
+                <text></text>
+            </feedback>
+        </answer>
+        <answer fraction="100.0" format="html">
+            <text>Отношение человека к миру и место человека в мире</text>
+            <feedback format="html">
+                <text></text>
+            </feedback>
+        </answer>
+        <answer fraction="0.0" format="html">
+            <text>Отношения человека к человеку</text>
+            <feedback format="html">
+                <text></text>
+            </feedback>
+        </answer>
+    </question>
+</quiz>

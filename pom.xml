@@ -68,7 +68,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>kg.almetico.converter.App</mainClass>
+                    <mainClass>kg.almetico.converter.docx2moodle.App</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -84,7 +84,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>kg.almetico.converter.docx2csv.gui.Main</mainClass>
+                            <mainClass>kg.almetico.converter.docx2moodle.gui.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
