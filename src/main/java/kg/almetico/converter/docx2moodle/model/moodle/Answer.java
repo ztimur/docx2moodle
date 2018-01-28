@@ -18,7 +18,7 @@ public class Answer {
 
     public Answer(Double fraction, String text) {
         this.fraction = fraction;
-        this.text = text;
+        this.text = "<![CDATA["+text+"]]>";
     }
 
     public Double getFraction() {

@@ -13,11 +13,17 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import kg.almetico.converter.docx2moodle.DocParser;
+import kg.almetico.converter.docx2moodle.QuestionValidationException;
 import kg.almetico.converter.docx2moodle.Utils;
+import kg.almetico.converter.docx2moodle.model.moodle.Question;
 import kg.almetico.converter.docx2moodle.model.moodle.Quiz;
+import org.apache.commons.io.FileUtils;
 
+import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
 
 public class Main extends Application {
 
@@ -27,13 +33,8 @@ public class Main extends Application {
     DatePicker defaultGrade;
     DatePicker endDate;
     Button browseButton, processButton;
-    RadioButton rb1;
-    RadioButton rb2;
-    RadioButton rb3;
-    ToggleGroup group;
-    ProgressBar progressBar;
     Label infoLine;
-    Label messages;
+    TextInputControl messages;
 
     Stage primaryStage;
     private String selectedFileName;
@@ -69,14 +70,13 @@ public class Main extends Application {
         GridPane.setColumnIndex(processButton, 1);
 
         VBox footer = new VBox();
-        messages = new Label();
+        messages = new TextArea();
+        messages.setEditable(false);
+
 
         infoLine = new Label();
         infoLine.setVisible(false);
-        progressBar = new ProgressBar(0);
-        progressBar.setVisible(false);
-        progressBar.setMinWidth(400);
-        footer.getChildren().addAll(messages, infoLine, progressBar, processButton);
+        footer.getChildren().addAll(messages, infoLine, processButton);
         footer.setSpacing(10);
         footer.setAlignment(Pos.CENTER);
         footer.setStyle("-fx-background-color: #e0e0e0;");
@@ -95,7 +95,7 @@ public class Main extends Application {
 
         initHandlers(primaryStage);
 
-        Scene scene = new Scene(root, 440, 500);
+        Scene scene = new Scene(root, 1024, 640);
 //        scene.getStylesheets().add("css/app.css");
 
         primaryStage.setScene(scene);
@@ -117,12 +117,7 @@ public class Main extends Application {
         processButton.setOnAction(event -> {
 
             messages.setText("");
-
-            try {
-                process(this.selectedFileName);
-            } catch (Throwable e) {
-                alert(Alert.AlertType.ERROR, e.getMessage());
-            }
+            process(this.selectedFileName);
         });
     }
 
@@ -132,24 +127,44 @@ public class Main extends Application {
             try {
                 infoLine.setVisible(true);
                 processButton.setDisable(true);
-                progressBar.setVisible(true);
-                progressBar.setProgress(0);
                 DocParser parser = new DocParser();
                 parser.parse(filename);
                 quiz = parser.getQuiz();
 
+                StringBuilder sb = new StringBuilder();
+                int i = 0;
+                for (Question q : quiz.getQuestions()) {
+                    sb.append(String.format("%d. %s\n", ++i, q.getName()));
+                }
+
                 FileOutputStream outputStream = new FileOutputStream(this.selectedFileName + ".xml");
-                Utils.marshallQuiz(quiz, outputStream);
+
+                String r = Utils.marshallQuiz(quiz);
+                FileUtils.writeStringToFile(new File(this.selectedFileName + ".xml"),r, "UTF-8");
                 outputStream.close();
                 Platform.runLater(() -> {
-                    messages.setText(String.format("Processed %d questions.", quiz.getQuestions().size()));
+                    messages.setText(String.format("%s\nОбработано %d вопросов.", sb.toString(), quiz.getQuestions().size()));
                 });
-            } catch (Throwable e) {
+            } catch (QuestionValidationException e) {
                 e.printStackTrace();
-                messages.setText(e.getMessage());
+                Platform.runLater(() -> {
+                    String m = "";
+                    try {
+                        m = Utils.marshallQuestion(e.getQuestion());
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    } catch (JAXBException e1) {
+                        e1.printStackTrace();
+                    }
+                    messages.setText(String.format("Error: %s. %s. %s", e.getMessage(), e.getQuestion().getName(), m));
+                });
+            } catch (IOException | JAXBException e) {
+                e.printStackTrace();
+                Platform.runLater(() -> {
+                    messages.setText(String.format("Error: %s.", e.getMessage()));
+                });
             } finally {
                 processButton.setDisable(false);
-                progressBar.setVisible(false);
                 infoLine.setVisible(false);
             }
         }).start();

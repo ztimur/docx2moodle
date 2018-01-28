@@ -10,7 +10,7 @@ public class QuestionName {
     private String text;
 
     public QuestionName(String text) {
-        this.text = text;
+        this.text = String.format("<![CDATA[%s]]>", text);
     }
 
     public String getText() {

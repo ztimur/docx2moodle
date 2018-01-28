@@ -20,7 +20,7 @@ public class Question {
     private Feedback generalFeedback = new Feedback("");
 
     @XmlElement(name = "defaultgrade")
-    private Double defaultgrade = 1.0;
+    private Double defaultgrade = 5.0;
 
     @XmlElement(name = "penalty")
     private Double penalty = 0.3333333;
@@ -35,7 +35,7 @@ public class Question {
     private Boolean shuffleanswers = Boolean.TRUE;
 
     @XmlElement(name = "answernumbering")
-    private String answernumbering = "123";
+    private String answernumbering = "none";
 
     @XmlElement(name = "correctfeedback")
     private Feedback correctfeedback = new Feedback("Ваш ответ верный.");
@@ -55,11 +55,14 @@ public class Question {
     public Question() {
     }
 
-    public Question(QuestionName name, QuestionText text) {
+    public Question(QuestionName name) {
         this.name = name;
-        this.text = text;
+        this.text = new QuestionText("");
     }
 
+    public void addPrompt(String text) {
+        this.text.add(text);
+    }
     public void addAnswer(Answer answer) {
         this.answers.add(answer);
     }

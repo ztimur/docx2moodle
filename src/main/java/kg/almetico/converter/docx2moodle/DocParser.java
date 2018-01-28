@@ -1,6 +1,9 @@
 package kg.almetico.converter.docx2moodle;
 
-import kg.almetico.converter.docx2moodle.model.moodle.*;
+import kg.almetico.converter.docx2moodle.model.moodle.Answer;
+import kg.almetico.converter.docx2moodle.model.moodle.Question;
+import kg.almetico.converter.docx2moodle.model.moodle.QuestionName;
+import kg.almetico.converter.docx2moodle.model.moodle.Quiz;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -13,7 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DocParser {
-    static Pattern CHOICE_PATTERN = Pattern.compile("\\s*(\\*)?([абвгде])+\\s*\\)(.*)");
+    static Pattern CHOICE_PATTERN = Pattern.compile("\\s*(\\*)?([абвгде1234567abcdefgh])+\\s*\\)\\s*(\\*)?(.*)");
     private Quiz quiz = new Quiz();
 
     public DocParser() {
@@ -58,7 +61,8 @@ public class DocParser {
                 }
                 text = text.substring(text.indexOf('#') + 1).trim();
 
-                result = new Question(new QuestionName(text), new QuestionText(text));
+                result = new Question(new QuestionName(text));
+                result.addPrompt(text);
                 while (iterator.hasNext() && !done) {
                     XWPFParagraph bp = iterator.next();
                     String t = bp.getText();
@@ -66,18 +70,25 @@ public class DocParser {
                         done = true;
                     } else {
                         while (iterator.hasNext() && !done) {
+
                             Matcher matcher = CHOICE_PATTERN.matcher(t);
                             if (matcher.matches()) {
 //                                System.out.println(String.format("0->%s 1->%s 2->%s 3->%s", matcher.group(0), matcher.group(1), matcher.group(2), matcher.group(3)));
-                                if (StringUtils.isBlank(matcher.group(3))) {
+                                if (StringUtils.isBlank(matcher.group(4))) {
                                     throw new IllegalStateException(String.format("Answer body could not be null. [%s]", text));
                                 }
-                                Double fraction = matcher.group(1) != null ? 100.0 : 0.0;
-                                Answer answer = new Answer(fraction, matcher.group(3).trim());
+                                Double fraction = matcher.group(1) != null ? 100.0 : matcher.group(3) != null ? 100 : 0.0;
+                                Answer answer = new Answer(fraction, matcher.group(4).trim());
                                 result.addAnswer(answer);
                                 t = iterator.next().getText();
                             } else {
-                                done = true;
+                                if (StringUtils.isBlank(t)) {
+                                    done = true;
+                                } else {
+                                    System.out.println(t);
+                                    result.addPrompt(t);
+                                    t = iterator.next().getText();
+                                }
                             }
                         }
                     }

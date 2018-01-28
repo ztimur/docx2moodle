@@ -14,7 +14,7 @@ public class App {
         try {
             docParser.parse("assets/example-questions.docx");
             Quiz quiz = docParser.getQuiz();
-            Utils.marshallQuiz(quiz, System.out);
+            System.out.println(Utils.marshallQuiz(quiz));
         } catch (QuestionValidationException e) {
             System.out.println(String.format("Validation error: %s. \n %s", e.getMessage(), Utils.marshallQuestion(e.getQuestion())));
         }

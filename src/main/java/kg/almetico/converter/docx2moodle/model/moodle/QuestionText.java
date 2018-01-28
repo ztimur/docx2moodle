@@ -32,4 +32,8 @@ public class QuestionText {
     public void setText(String text) {
         this.text = text;
     }
+
+    public void add(String text) {
+        this.text = String.format("%s<![CDATA[%s]]>", this.text, text);
+    }
 }
