@@ -5,6 +5,7 @@ import kg.almetico.converter.docx2moodle.model.moodle.Question;
 import kg.almetico.converter.docx2moodle.model.moodle.QuestionName;
 import kg.almetico.converter.docx2moodle.model.moodle.Quiz;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 
@@ -16,7 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DocParser {
-    static Pattern CHOICE_PATTERN = Pattern.compile("\\s*(\\*)?([абвгде1234567abcdefgh])+\\s*\\)\\s*(\\*)?(.*)");
+    static Pattern CHOICE_PATTERN = Pattern.compile("\\s*(\\*)?([абвгдежАБВГДЕЖ1234567abcdefghABCDEFGH])+\\s*[).]\\s*(\\*)?(.*)");
     private Quiz quiz = new Quiz();
 
     public DocParser() {
@@ -37,6 +38,7 @@ public class DocParser {
 
                 if (question != null) {
                     Validator.validate(question);
+                    question.adjustAnswers();
                     quiz.addQuestion(question);
                 }
             }
@@ -61,8 +63,9 @@ public class DocParser {
                 }
                 text = text.substring(text.indexOf('#') + 1).trim();
 
-                result = new Question(new QuestionName(text));
-                result.addPrompt(text);
+                String text1 = StringEscapeUtils.escapeHtml4(text);
+                result = new Question(new QuestionName(text1));
+                result.addPrompt(text1+"<br/>");
                 while (iterator.hasNext() && !done) {
                     XWPFParagraph bp = iterator.next();
                     String t = bp.getText();
@@ -78,7 +81,8 @@ public class DocParser {
                                     throw new IllegalStateException(String.format("Answer body could not be null. [%s]", text));
                                 }
                                 Double fraction = matcher.group(1) != null ? 100.0 : matcher.group(3) != null ? 100 : 0.0;
-                                Answer answer = new Answer(fraction, matcher.group(4).trim());
+                                String t1 = matcher.group(4).trim();
+                                Answer answer = new Answer(fraction, StringEscapeUtils.escapeHtml4(t1));
                                 result.addAnswer(answer);
                                 t = iterator.next().getText();
                             } else {
@@ -86,7 +90,7 @@ public class DocParser {
                                     done = true;
                                 } else {
                                     System.out.println(t);
-                                    result.addPrompt(t);
+                                    result.addPrompt(StringEscapeUtils.escapeHtml4(t)+"<br/>");
                                     t = iterator.next().getText();
                                 }
                             }

@@ -2,6 +2,7 @@ package kg.almetico.converter.docx2moodle.model.moodle;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 public class Answer {
     @XmlAttribute(name = "fraction")
@@ -21,7 +22,12 @@ public class Answer {
         this.text = "<![CDATA["+text+"]]>";
     }
 
+    @XmlTransient
     public Double getFraction() {
         return fraction;
+    }
+
+    public void setFraction(Double fraction) {
+        this.fraction = fraction;
     }
 }

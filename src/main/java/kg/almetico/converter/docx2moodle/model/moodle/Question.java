@@ -63,6 +63,7 @@ public class Question {
     public void addPrompt(String text) {
         this.text.add(text);
     }
+
     public void addAnswer(Answer answer) {
         this.answers.add(answer);
     }
@@ -193,6 +194,36 @@ public class Question {
             result += answer.getFraction();
         }
         return result;
+    }
+
+    public void adjustAnswers() {
+        int counter = 0;
+        for (Answer answer : this.answers) {
+            if (answer.getFraction() > 0.0) {
+                counter++;
+            }
+        }
+
+        if (counter > 1) {
+            this.single = false;
+            double fractionsValue = 100.0 / counter;
+            for (Answer answer : this.answers) {
+                if (answer.getFraction() > 0.0) {
+                    answer.setFraction(fractionsValue);
+                }
+            }
+        }
+    }
+
+    public int getFractionsCount() {
+        int counter = 0;
+        for (Answer answer : this.answers) {
+            if (answer.getFraction() > 0.0) {
+                counter++;
+            }
+        }
+
+        return counter;
     }
 
 

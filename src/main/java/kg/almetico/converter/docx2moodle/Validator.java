@@ -6,13 +6,13 @@ public class Validator {
 
     public static void validate(Question question) throws QuestionValidationException {
         Double sum = question.getFractionsSum();
-
-        if (Math.abs(100 - sum) > 0.1) {
-            if (sum == 0.0) {
-                throw new QuestionValidationException("Correct answer not marked.", question);
-            } else {
-                throw new QuestionValidationException(String.format("Fraction sum incorrect: %f.", sum), question);
-            }
+        if (sum == 0.0) {
+            throw new QuestionValidationException("Correct answer not marked.", question);
         }
+
+        if (question.getAnswers().size() < 2) {
+            throw new QuestionValidationException("Answers count should be more then 1.", question);
+        }
+
     }
 }

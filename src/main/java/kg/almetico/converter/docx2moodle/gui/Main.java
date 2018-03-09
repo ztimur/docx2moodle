@@ -23,7 +23,6 @@ import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.StringWriter;
 
 public class Main extends Application {
 
@@ -39,6 +38,7 @@ public class Main extends Application {
     Stage primaryStage;
     private String selectedFileName;
     private Quiz quiz;
+    private File lastPath;
 
     private Pane buildContents() {
 
@@ -107,10 +107,15 @@ public class Main extends Application {
     private void initHandlers(Stage primaryStage) {
         browseButton.setOnAction(event -> {
             fileChooser.setTitle("Please select a file");
+            if (this.lastPath != null) {
+                System.out.println(this.lastPath);
+                fileChooser.setInitialDirectory(this.lastPath);
+            }
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
             if (selectedFile != null) {
                 primaryStage.setTitle(selectedFile.getAbsolutePath());
                 this.selectedFileName = selectedFile.getAbsolutePath();
+                this.lastPath = selectedFile.getParentFile();
             }
         });
 
@@ -140,7 +145,7 @@ public class Main extends Application {
                 FileOutputStream outputStream = new FileOutputStream(this.selectedFileName + ".xml");
 
                 String r = Utils.marshallQuiz(quiz);
-                FileUtils.writeStringToFile(new File(this.selectedFileName + ".xml"),r, "UTF-8");
+                FileUtils.writeStringToFile(new File(this.selectedFileName + ".xml"), r, "UTF-8");
                 outputStream.close();
                 Platform.runLater(() -> {
                     messages.setText(String.format("%s\nОбработано %d вопросов.", sb.toString(), quiz.getQuestions().size()));
