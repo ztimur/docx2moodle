@@ -1,6 +1,5 @@
 package kg.almetico.converter.docx2moodle;
 
-import com.sun.xml.internal.bind.marshaller.DataWriter;
 import kg.almetico.converter.docx2moodle.model.moodle.Question;
 import kg.almetico.converter.docx2moodle.model.moodle.Quiz;
 
@@ -10,6 +9,9 @@ import javax.xml.bind.Marshaller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
+import com.sun.xml.internal.bind.marshaller.DataWriter;
+
 
 public class Utils {
 
