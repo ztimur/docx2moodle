@@ -21,7 +21,7 @@ import kg.almetico.converter.docx2moodle.model.moodle.Quiz;
 
 public class DocParser
 {
-    public static final String QUESTION_PATTERN = "(.*)?[\\*]{3}([0-9]{3})\\.([0-9]{2})\\.([0-9]{1})\\.?(.*)";
+    public static final String QUESTION_PATTERN = "(.*)?[\\*]{3}([0-9]{3})\\.([0-9]+)\\.([0-9]{1})\\.?(.*)";
     static Pattern CHOICE_PATTERN =
             Pattern.compile( "\\s*(\\*)?([123456789абвгдежАБВГДЕЖ1234567abcdefghABCDEFGH])+\\s*[).]\\s*(\\*)?(.*)" );
     private Quiz quiz = new Quiz();
